@@ -1,3 +1,4 @@
+import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { Image } from 'react-native';
 
@@ -30,13 +31,28 @@ interface Food {
 const Orders: React.FC = () => {
   const [orders, setOrders] = useState<Food[]>([]);
 
-  useEffect(() => {
-    async function loadOrders(): Promise<void> {
-      // Load orders from API
-    }
+  /* const isFocused = useIsFocused(); */
 
-    loadOrders();
-  }, []);
+  useEffect(
+    () => {
+      async function loadOrders(): Promise<void> {
+        const { data } = await api.get<Food[]>('/orders');
+
+        const formattedOrdersData = data.map(({ price, ...rest }) => ({
+          ...rest,
+          price,
+          formattedPrice: formatValue(price),
+        }));
+
+        setOrders(formattedOrdersData);
+      }
+
+      loadOrders();
+    },
+    [
+      /* isFocused */
+    ],
+  );
 
   return (
     <Container>
@@ -47,7 +63,7 @@ const Orders: React.FC = () => {
       <FoodsContainer>
         <FoodList
           data={orders}
-          keyExtractor={item => String(item.id)}
+          keyExtractor={(item) => String(item.id)}
           renderItem={({ item }) => (
             <Food key={item.id} activeOpacity={0.6}>
               <FoodImageContainer>

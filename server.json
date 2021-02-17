@@ -88,6 +88,44 @@
           "quantity": 1
         }
       ]
+    },
+    {
+      "product_id": 2,
+      "id": "2-1613532225049",
+      "name": "Veggie",
+      "description": "Macarrão com pimentão, ervilha e ervas finas colhidas no himalaia.",
+      "price": 26.4,
+      "category": 2,
+      "image_url": "https://storage.googleapis.com/golden-wind/bootcamp-gostack/desafio-food/food2.png",
+      "thumbnail_url": "https://storage.googleapis.com/golden-wind/bootcamp-gostack/desafio-gorestaurant-mobile/veggie.png",
+      "extras": [
+        {
+          "name": "Bacon",
+          "value": 1.5,
+          "id": 3,
+          "quantity": 3
+        }
+      ],
+      "formattedPrice": "R$21,90"
+    },
+    {
+      "product_id": 3,
+      "id": "3-1613532300250",
+      "name": "A la Camarón",
+      "description": "Macarrão com vegetais de primeira linha e camarão dos 7 mares.",
+      "price": 54.8,
+      "category": 3,
+      "image_url": "https://storage.googleapis.com/golden-wind/bootcamp-gostack/desafio-food/food3.png",
+      "thumbnail_url": "https://storage.googleapis.com/golden-wind/bootcamp-gostack/desafio-gorestaurant-mobile/camarao.png",
+      "extras": [
+        {
+          "name": "Bacon",
+          "value": 1.5,
+          "id": 4,
+          "quantity": 2
+        }
+      ],
+      "formattedPrice": "R$25,90"
     }
   ],
   "favorites": [
@@ -99,6 +137,15 @@
       "category": 2,
       "image_url": "https://storage.googleapis.com/golden-wind/bootcamp-gostack/desafio-food/food2.png",
       "thumbnail_url": "https://storage.googleapis.com/golden-wind/bootcamp-gostack/desafio-gorestaurant-mobile/veggie.png"
+    },
+    {
+      "id": 1,
+      "name": "Ao molho",
+      "description": "Macarrão ao molho branco, fughi e cheiro verde das montanhas.",
+      "price": 19.9,
+      "category": 1,
+      "image_url": "https://storage.googleapis.com/golden-wind/bootcamp-gostack/desafio-food/food1.png",
+      "thumbnail_url": "https://storage.googleapis.com/golden-wind/bootcamp-gostack/desafio-gorestaurant-mobile/ao_molho.png"
     }
   ]
 }

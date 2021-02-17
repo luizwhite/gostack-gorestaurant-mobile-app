@@ -10,7 +10,7 @@ const mockedNavigate = jest.fn();
 
 jest.mock('@react-navigation/native', () => {
   return {
-    ...jest.requireActual('@react-navigation/native'),
+    ...(jest.requireActual('@react-navigation/native') as any),
     useNavigation: () => ({
       navigate: mockedNavigate,
     }),
@@ -76,7 +76,7 @@ describe('Dashboard', () => {
       },
     ]);
 
-    apiMock.onGet('/foods').reply(config => {
+    apiMock.onGet('/foods').reply((config) => {
       if (config.params.name_like === '') {
         return [200, items];
       }
@@ -217,7 +217,7 @@ describe('Dashboard', () => {
       },
     ];
 
-    apiMock.onGet('/foods').reply(config => {
+    apiMock.onGet('/foods').reply((config) => {
       switch (config.params.category_like) {
         case 1:
           return [200, categoryOneItems];
@@ -381,7 +381,7 @@ describe('Dashboard', () => {
       },
     ];
 
-    apiMock.onGet('/foods').reply(config => {
+    apiMock.onGet('/foods').reply((config) => {
       switch (config.params.name_like) {
         case 'Ao molho':
           return [200, aoMolhoSearchResult];
@@ -400,9 +400,7 @@ describe('Dashboard', () => {
 
     apiMock.onGet('/categories').reply(200, categories);
 
-    const { getByText, queryByText, getByTestId, debug } = render(
-      <Dashboard />,
-    );
+    const { getByText, queryByText, getByTestId } = render(<Dashboard />);
 
     await wait(() => expect(getByText('Massas')).toBeTruthy(), {
       timeout: 200,
@@ -497,7 +495,7 @@ describe('Dashboard', () => {
       },
     ]);
 
-    apiMock.onGet('/foods').reply(config => {
+    apiMock.onGet('/foods').reply((config) => {
       if (config.params.name_like === '') {
         return [200, items];
       }

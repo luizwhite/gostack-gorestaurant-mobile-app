@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Image, ScrollView } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
@@ -31,6 +31,7 @@ import {
 interface Food {
   id: number;
   name: string;
+  category: number;
   description: string;
   price: number;
   thumbnail_url: string;
@@ -54,12 +55,23 @@ const Dashboard: React.FC = () => {
   const navigation = useNavigation();
 
   async function handleNavigate(id: number): Promise<void> {
-    // Navigate do ProductDetails page
+    const { navigate: navigateTo } = navigation;
+
+    navigateTo('FoodDetails', {
+      id,
+    });
   }
 
   useEffect(() => {
     async function loadFoods(): Promise<void> {
-      // Load Foods from API
+      const { data: foodsLoaded } = await api.get<Food[]>('/foods', {
+        params: {
+          name_like: searchValue,
+          category_like: selectedCategory,
+        },
+      });
+
+      setFoods(foodsLoaded);
     }
 
     loadFoods();
@@ -67,15 +79,32 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     async function loadCategories(): Promise<void> {
-      // Load categories from API
+      const { data } = await api.get('/categories');
+
+      setCategories(data);
     }
 
     loadCategories();
   }, []);
 
-  function handleSelectCategory(id: number): void {
-    // Select / deselect category
-  }
+  const handleSelectCategory = useCallback(
+    (id: number) => {
+      const categorySelected = categories.find(
+        ({ id: categoryId }) => categoryId === id,
+      );
+      if (!categorySelected) return;
+
+      if (selectedCategory === id) {
+        setSelectedCategory(undefined);
+        return;
+      }
+
+      setSelectedCategory(id);
+
+      setFoods(foods.filter(({ category }) => category === id));
+    },
+    [categories, foods, selectedCategory],
+  );
 
   return (
     <Container>
@@ -105,7 +134,7 @@ const Dashboard: React.FC = () => {
             horizontal
             showsHorizontalScrollIndicator={false}
           >
-            {categories.map(category => (
+            {categories.map((category) => (
               <CategoryItem
                 key={category.id}
                 isSelected={category.id === selectedCategory}
@@ -125,7 +154,7 @@ const Dashboard: React.FC = () => {
         <FoodsContainer>
           <Title>Pratos</Title>
           <FoodList>
-            {foods.map(food => (
+            {foods.map((food) => (
               <Food
                 key={food.id}
                 onPress={() => handleNavigate(food.id)}
